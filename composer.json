@@ -1,0 +1,27 @@
+{
+    "name": "raphhh/trex-collection",
+    "description": "Helpers to manipulate collections",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raphaël Lefebvre",
+            "email": "raphael@raphaellefebvre.be"
+        }
+    ],
+    "keywords": ["arrayobject", "collection"],
+    "autoload": {
+        "psr-4": {
+            "TRex\\Collection\\": [
+                "src/",
+                "tests/"
+            ]
+        }
+    },
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    }
+}
