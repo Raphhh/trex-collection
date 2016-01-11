@@ -59,4 +59,47 @@ class CollectionFilterTraitTest extends \PHPUnit_Framework_TestCase
             $this->assertSame('A', $bar);
         }
     }
+
+    public function testExtractDefault()
+    {
+        $data = array(
+            1 => 'a',
+            0 => 'b',
+            'a' => 1,
+            'b' => 0,
+        );
+        $collection = new Collection($data);
+        $result = $collection->extract(1);
+        $this->assertNotSame($collection, $result);
+        $this->assertInstanceOf(get_class($collection), $result);
+        $this->assertSame(array_slice($data, 1, 3, true), (array)$result);
+    }
+
+    public function testExtractWithLength()
+    {
+        $data = array(
+            1 => 'a',
+            0 => 'b',
+            'a' => 1,
+            'b' => 0,
+        );
+        $collection = new Collection($data);
+        $result = $collection->extract(1, 2);
+        $this->assertInstanceOf(get_class($collection), $result);
+        $this->assertSame(array_slice($data, 1, 2, true), (array)$result);
+    }
+
+    public function testExtractWithoutPreservedKeys()
+    {
+        $data = array(
+            1 => 'a',
+            0 => 'b',
+            'a' => 1,
+            'b' => 0,
+        );
+        $collection = new Collection($data);
+        $result = $collection->extract(1, 0, false);
+        $this->assertInstanceOf(get_class($collection), $result);
+        $this->assertSame(array_slice($data, 1, 3, false), (array)$result);
+    }
 }

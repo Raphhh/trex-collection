@@ -33,4 +33,20 @@ trait CollectionFilterTrait
             (array)$this
         ));
     }
+
+    /**
+     * Extracts the sequence of elements.
+     * Starts at index $startIndex and stop after $length keys.
+     *
+     * @param int $startIndex
+     * @param int $length
+     * @param bool $areKeysPreserved
+     * @return mixed
+     */
+    public function extract($startIndex, $length = 0, $areKeysPreserved = true)
+    {
+        $collection = (array) $this;
+        $length = $length ?: count($collection);
+        return new $this(array_slice($collection, $startIndex, $length, $areKeysPreserved));
+    }
 }
