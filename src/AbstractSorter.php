@@ -30,6 +30,8 @@ abstract class AbstractSorter
     }
 
     /**
+     * calls the property/method/key to extract the value to sort.
+     *
      * @param mixed $object
      * @return mixed
      */
