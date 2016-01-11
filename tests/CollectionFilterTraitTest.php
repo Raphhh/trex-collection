@@ -18,7 +18,7 @@ class CollectionFilterTraitTest extends \PHPUnit_Framework_TestCase
 
         $result = $collection->filter(new FooFilter('a'));
         $this->assertNotSame($collection, $result);
-        $this->assertInstanceOf(get_class($collection), $collection);
+        $this->assertInstanceOf(get_class($collection), $result);
         $this->assertCount(2, $result);
     }
 
