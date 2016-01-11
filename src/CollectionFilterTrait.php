@@ -15,4 +15,22 @@ trait CollectionFilterTrait
         }
         return new $this(array_filter((array)$this, $filter));
     }
+
+    /**
+     * Executes the callback for every value.
+     * Returns a collection with the result of each callback call.
+     *
+     * @param callable $callback
+     * @param array $args
+     * @return $this
+     */
+    public function each(callable $callback, array $args = [])
+    {
+        return new $this(array_map(
+            function($value) use($callback, $args){
+                return call_user_func($callback, $value, $args) ?: $value;
+            },
+            (array)$this
+        ));
+    }
 }
