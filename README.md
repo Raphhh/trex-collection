@@ -17,61 +17,103 @@
 
 ### Collection
 
-Collection is just an `ArrayObject` implementing some additional methods.
+`Collection` is just an `ArrayObject` implementing some additional methods.
 
-Because Collection is just a facade, you can keep coding with ArrayObject and implements some TRex traits by yourself.
+Because `Collection` is just a facade, you can keep coding with `ArrayObject` and implements some TRex traits by yourself.
 
-#### CollectionFilterTrait
+#### Filter
 
 Provide methods to filter a collection.
 
-##### filter
+##### Filter values with a callback: filter
+
 ```php
 use TRex\Collection\Collection;
 
-class Bar
-{
-    public $foo;
-
-    public function __construct($foo)
-    {
-        $this->foo = $foo;
-    }
-}
-
 $collection = new Collection([
-    new Bar('a'),
-    new Bar('c'),
-    new Bar('b'),
+    't-rex',
+    'dog',
+    'cat',
 ]);
 
-$collection->filter(new FooFilter('bar'));
-```
-
-##### each
-```php
-use TRex\Collection\Collection;
-
-class Bar
-{
-    public $foo;
-
-    public function __construct($foo)
-    {
-        $this->foo = $foo;
-    }
-}
-
-$collection = new Collection([
-    new Bar('a'),
-    new Bar('b'),
-]);
-
-$result = $collection->each(function($bar){
-    $bar->foo = strtoupper($bar->foo);
+$result = $collection->filter(function($value){
+    return $value === 't-rex';
 });
+
+(array)$result; //['t-rex']
 ```
 
+##### Apply a callback to the values: each
+
+```php
+use TRex\Collection\Collection;
+
+$collection = new Collection([
+    't-rex',
+    'dog',
+    'cat',
+]);
+
+$result = $collection->each(function($value){
+    return strtoupper($value);
+});
+
+(array)$result; //['T-REX', 'DOG', 'CAT']
+```
+
+##### Extract a part of the list: extract
+
+```php
+use TRex\Collection\Collection;
+
+$collection = new Collection([
+    't-rex',
+    'dog',
+    'cat',
+]);
+
+$result = $collection->extract(1);
+
+(array)$result; //[1 => 'dog', 2 => 'cat']
+```
+
+#### Comparator
+
+##### Merge any collections: merge, mergeA
+
+```php
+$coll1 = new Collection(['t-rex']);
+$coll2 = new Collection(['dog']);
+$coll3 = new Collection(['cat']);
+
+$result = $coll1->merge($coll2, $coll3);
+
+(array)$result; //['t-rex', 'dog', 'cat']
+```
+
+##### Find the difference between any collections: diff, diffA, diffK
+
+```php
+$coll1 = new Collection(['t-rex', 'dog', 'cat']);
+$coll2 = new Collection(['dog']);
+$coll3 = new Collection(['cat']);
+
+$result = $coll1->diff($coll2, $coll3);
+
+(array)$result; //['t-rex']
+```
+
+##### Find the intersection between any collections: intersect, intersectA, intersectK
+
+```php
+$coll1 = new Collection(['t-rex', 'dog', 'cat']);
+$coll2 = new Collection(['t-rex', 'dog']);
+$coll3 = new Collection(['t-rex', 'cat']);
+
+$result = $coll1->intersect($coll2, $coll3);
+
+(array)$result; //['t-rex']
+```
 
 ### Sorter
 
@@ -123,7 +165,6 @@ $collection = [
 
 uasort($collection, new FooSorter()); //will sort 'a', 'b', 'c'
 ```
-
 
 ### Filter
 
