@@ -79,4 +79,37 @@ class CollectionSorterTraitTest extends \PHPUnit_Framework_TestCase
             $collection->reverse()->keys()
         );
     }
+
+    public function testShuffle()
+    {
+        $collection = new Collection([
+            'first' => new Bar('a'),
+            'second' => new Bar('b'),
+            'third' => new Bar('c'),
+            'fourth' => new Bar('c'),
+        ]);
+
+        $result = $collection->shuffle();
+        $this->assertArrayHasKey('first', $result);
+        $this->assertArrayHasKey('second', $result);
+        $this->assertArrayHasKey('third', $result);
+        $this->assertArrayHasKey('fourth', $result);
+        $this->assertNotSame(['first', 'second', 'third', 'fourth'], $result->keys());
+    }
+
+    public function testShuffleReindexed()
+    {
+        $collection = new Collection([
+            'first' => new Bar('a'),
+            'second' => new Bar('b'),
+            'third' => new Bar('c'),
+            'fourth' => new Bar('c'),
+        ]);
+
+        $result = $collection->shuffle(false);
+        $this->assertArrayHasKey(0, $result);
+        $this->assertArrayHasKey(1, $result);
+        $this->assertArrayHasKey(2, $result);
+        $this->assertArrayHasKey(3, $result);
+    }
 }

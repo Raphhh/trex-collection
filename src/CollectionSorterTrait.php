@@ -32,6 +32,23 @@ trait CollectionSorterTrait
     }
 
     /**
+     * @param bool $areKeysPreserved
+     * @return $this
+     */
+    public function shuffle($areKeysPreserved = true)
+    {
+        if($areKeysPreserved){
+            return $this->sort(function(){
+                return mt_rand(-1, 1);
+            });
+        }
+
+        $collection = (array)$this;
+        shuffle($collection);
+        return new $this($collection);
+    }
+
+    /**
      * @param callable $callback
      * @return $this[]
      */
