@@ -94,7 +94,6 @@ class CollectionSorterTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('second', $result);
         $this->assertArrayHasKey('third', $result);
         $this->assertArrayHasKey('fourth', $result);
-        $this->assertNotSame(['first', 'second', 'third', 'fourth'], $result->keys());
     }
 
     public function testShuffleReindexed()
