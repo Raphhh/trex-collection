@@ -55,4 +55,20 @@ trait CollectionFilterTrait
         $length = $length ?: count($collection);
         return new $this(array_slice($collection, $startIndex, $length, $areKeysPreserved));
     }
+
+    /**
+     * @param int $length
+     * @return $this
+     */
+    public function rand($length = 1)
+    {
+        $keys = (array)array_rand((array)$this, $length);
+        $result = new $this;
+        foreach ($this as $key => $value) {
+            if (in_array($key, $keys)) {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
 }

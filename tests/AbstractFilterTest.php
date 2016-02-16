@@ -67,4 +67,15 @@ class AbstractFilterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('1', $result[0]->foo);
         $this->assertSame(1, $result[1]->foo);
     }
+
+    public function testRand()
+    {
+        $collection = new Collection([1, 2, 3]);
+
+        $result = $collection->rand();
+        $this->assertCount(1, $result);
+
+        $result = $collection->rand(2);
+        $this->assertCount(2, $result);
+    }
 }
