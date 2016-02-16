@@ -21,4 +21,21 @@ trait CollectionSorterTrait
         uasort($collection, $callback);
         return new $this($collection);
     }
+
+    /**
+     * @param callable $callback
+     * @return $this[]
+     */
+    public function groupBy(callable $callback)
+    {
+        $results = [];
+        $collection = new Collection($this);
+        foreach ($collection->each($callback) as $key => $result) {
+            if (!isset($results[$result])) {
+                $results[$result] = new $this();
+            }
+            $results[$result][$key] = $this[$key];
+        }
+        return $results;
+    }
 }

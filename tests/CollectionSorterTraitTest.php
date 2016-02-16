@@ -39,4 +39,24 @@ class CollectionSorterTraitTest extends \PHPUnit_Framework_TestCase
             ++$i;
         }
     }
+
+    public function testGroupBy()
+    {
+        $collection = new Collection([
+            'first' => new Bar('a'),
+            'third' => new Bar('c'),
+            'fourth' => new Bar('c'),
+            'second' => new Bar('b'),
+        ]);
+
+        $collections = $collection->groupBy(function(Bar $bar){
+            return $bar->foo;
+        });
+
+        $this->assertCount(3, $collections);
+        $this->assertSame($collection['first'], $collections['a']['first']);
+        $this->assertSame($collection['second'], $collections['b']['second']);
+        $this->assertSame($collection['third'], $collections['c']['third']);
+        $this->assertSame($collection['fourth'], $collections['c']['fourth']);
+    }
 }
