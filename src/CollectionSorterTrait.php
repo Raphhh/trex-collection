@@ -23,6 +23,15 @@ trait CollectionSorterTrait
     }
 
     /**
+     * @param bool $areKeysPreserved
+     * @return $this
+     */
+    public function reverse($areKeysPreserved = true)
+    {
+        return new $this(array_reverse((array)$this, $areKeysPreserved));
+    }
+
+    /**
      * @param callable $callback
      * @return $this[]
      */

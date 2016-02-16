@@ -59,4 +59,24 @@ class CollectionSorterTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($collection['third'], $collections['c']['third']);
         $this->assertSame($collection['fourth'], $collections['c']['fourth']);
     }
+
+    public function testReverse()
+    {
+        $collection = new Collection([
+            'first' => new Bar('a'),
+            'second' => new Bar('b'),
+            'third' => new Bar('c'),
+            'fourth' => new Bar('c'),
+        ]);
+
+        $this->assertSame(
+            [
+                'fourth',
+                'third',
+                'second',
+                'first',
+            ],
+            $collection->reverse()->keys()
+        );
+    }
 }
