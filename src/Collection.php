@@ -7,4 +7,5 @@ class Collection extends \ArrayObject
     use CollectionKeyAccessorTrait;
     use CollectionFilterTrait;
     use CollectionComparatorTrait;
+    use CollectionSorterTrait;
 }
