@@ -19,7 +19,21 @@
 
 `Collection` is just an `ArrayObject` implementing some additional methods.
 
-Because `Collection` is just a facade, you can keep coding with `ArrayObject` and implements some TRex traits by yourself.
+Because `Collection` is just a facade, you can keep coding with `ArrayObject` (or any object castable into an array) and implement some TRex traits by yourself:
+
+```php
+use TRex\Collection;
+
+class MyCollection extends \ArrayObject
+{
+    use CollectionValueAccessorTrait;
+    use CollectionKeyAccessorTrait;
+    use CollectionFilterTrait;
+    use CollectionComparatorTrait;
+    use CollectionSorterTrait;
+    ...
+}
+```
 
 #### Filter
 
@@ -114,6 +128,98 @@ $result = $coll1->intersect($coll2, $coll3);
 
 (array)$result; //['t-rex']
 ```
+
+#### Sorter
+
+##### Reindex collection: reindex
+
+```php
+$collection = new Collection(['a' => 't-rex', 'b' => 'dog', 'c' => 'cat']);
+$result = $collection->reindex(); //[0 => ''t-rex', 1 => 'dog', 2 => 'cat']
+```
+
+##### Sort collection: sort
+
+```php
+$collection = new Collection(['t-rex', 'dog', 'cat']);
+$result = $collection->sort($callback); //indexes nex collection
+```
+
+##### Group by specific values: groupBy
+
+
+```php
+
+class Bar
+{
+    public $foo;
+
+    public function __construct($foo)
+    {
+        $this->foo = $foo;
+    }
+}
+
+
+$collection = new Collection([
+    new Bar('t-rex'),
+    new Bar('dog'),
+    new Bar('cat'),
+]);
+
+//we will split the collection in 2: dinosaurs vs pets
+$results = $collection->groupBy(function(Bar $bar){
+    if($bar->foo === 't-rex'){
+        return 'dinosaur';
+    }
+    return 'pet';
+});
+
+count($result['dinosaur']); // a Collection with 1 Bar with 't-rex'
+count($result['pet']); // a Collection with 2 Bar with 'dog' and 'cat'
+
+```
+
+
+#### Values
+
+##### Retrieve first value: first
+
+```php
+$collection = new Collection(['t-rex', 'dog', 'cat']);
+$collection->first(); //'t-rex'
+```
+
+##### Retrieve last value: last
+
+```php
+$collection = new Collection(['t-rex', 'dog', 'cat']);
+$collection->last(); //'cat'
+```
+
+##### Check is has value: has
+
+```php
+$collection = new Collection(['t-rex', 'dog', 'cat']);
+$collection->has('t-rex'); //true
+```
+
+#### Keys
+
+##### Search keys: search
+
+```php
+$collection = new Collection(['t-rex', 'dog', 'cat']);
+$collection->search('t-rex'); //[0]
+```
+
+##### Extract keys: keys
+
+```php
+$collection = new Collection(['t-rex', 'dog', 'cat']);
+$collection->keys(); //[0, 1, 2]
+```
+
 
 ### Sorter
 
