@@ -16,6 +16,7 @@ trait CollectionSorterTrait
     /**
      * @param callable $callback
      * @return $this
+     * @deprecated
      */
     public function sort(callable $callback)
     {
