@@ -102,4 +102,30 @@ class CollectionFilterTraitTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(get_class($collection), $result);
         $this->assertSame(array_slice($data, 1, 3, false), (array)$result);
     }
+
+    public function testAssertFalse()
+    {
+        $i = 0;
+        $data = [false, true];
+        $collection = new Collection($data);
+        $result = $collection->assert(function ($value) use (&$i) {
+            ++$i;
+            return $value;
+        });
+        $this->assertFalse($result);
+        $this->assertSame(1, $i);
+    }
+
+    public function testAssertTrue()
+    {
+        $i = 0;
+        $data = [true, true];
+        $collection = new Collection($data);
+        $result = $collection->assert(function ($value) use (&$i) {
+            ++$i;
+            return $value;
+        });
+        $this->assertTrue($result);
+        $this->assertSame(2, $i);
+    }
 }

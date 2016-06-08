@@ -42,6 +42,23 @@ trait CollectionFilterTrait
     }
 
     /**
+     * Executes the callback for every value.
+     * Returns false if the callback returns once a falsy value.
+     *
+     * @param callable $callback
+     * @return bool
+     */
+    public function assert(callable $callback)
+    {
+        foreach ($this as $key => $value) {
+            if (!call_user_func($callback, $value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Extracts the sequence of elements.
      * Starts at index $startIndex and stop after $length keys.
      *
