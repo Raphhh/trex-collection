@@ -1,7 +1,7 @@
 <?php
 namespace TRex\Collection;
 
-class Collection extends \ArrayObject
+class Collection extends \ArrayObject implements CollectionInterface
 {
     use CollectionValueAccessorTrait;
     use CollectionKeyAccessorTrait;
