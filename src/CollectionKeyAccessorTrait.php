@@ -3,7 +3,6 @@ namespace TRex\Collection;
 
 trait CollectionKeyAccessorTrait
 {
-
     /**
      * @param mixed $value
      * @param bool $isStrict
