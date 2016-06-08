@@ -25,6 +25,7 @@ trait CollectionFilterTrait
     /**
      * Executes the callback for every value.
      * Returns a collection with the result of each callback call.
+     * If the callback returns nothing, the returned collection will contain same values as the original ones.
      *
      * @param callable $callback
      * @param array $args
